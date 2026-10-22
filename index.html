@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMC Lab | Reparos Avançados, Manutenção e Redes</title>
+  <meta name="description" content="BMC Lab - Especialistas em reparos avançados, manutenção de equipamentos e soluções em redes. Atendimentos presenciais e remotos, visitas e entregas a domicílio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Paleta baseada no folder: azul-marinho, azul-céu, verde-água, lavanda e cinza-claro (tons pastel) */
+      --primary: #1f3a4d;
+      --primary-light: #2a4a60;
+      --accent: #7cc8ec;
+      --accent-hover: #5fb9e4;
+      --accent-soft: #d6effa;
+      --sky: #7cc8ec;
+      --sky-hover: #5fb9e4;
+      --sky-soft: #d6effa;
+      --mint: #a9dc9a;
+      --mint-soft: #e3f3df;
+      --lavender: #d9cbee;
+      --purple: #5b2d8e;
+      --label: #1677a8;
+      --text: #1f3a4d;
+      --text-muted: #587082;
+      --bg: #f4f8fa;
+      --white: #ffffff;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(31, 58, 77, 0.08);
+      --shadow-lg: 0 10px 40px rgba(31, 58, 77, 0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    .container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(31, 58, 77, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between; height: 96px;
+    }
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      color: var(--white);
+      line-height: 1;
+    }
+    .logo-svg {
+      height: 88px;
+      width: auto;
+      display: block;
+    }
+
+    nav { display: flex; align-items: center; gap: 28px; }
+    nav a { color: rgba(255,255,255,0.8); font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: white; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
+      transition: all 0.2s; cursor: pointer; border: none;
+    }
+    .btn-sky { background: var(--sky); color: var(--primary); }
+    .btn-sky:hover { background: var(--sky-hover); transform: translateY(-1px); }
+    .btn-whatsapp { background: #25D366; color: white; }
+    .btn-whatsapp:hover { background: #20bd5a; transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--primary); border: 1.5px solid rgba(31,58,77,0.35); }
+    .btn-outline:hover { border-color: var(--primary); background: rgba(31,58,77,0.06); }
+    .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+    .hero {
+      background: linear-gradient(135deg, #cfeaf8 0%, #e3f2ec 55%, #eef1f3 100%);
+      color: var(--primary); padding: 150px 0 100px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -40%; right: -15%; width: 550px; height: 550px;
+      background: radial-gradient(circle, rgba(169,220,154,0.45) 0%, transparent 70%); border-radius: 50%;
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -30%; left: -10%; width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(124,200,236,0.45) 0%, transparent 70%); border-radius: 50%;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(169,220,154,0.35); border: 1px solid rgba(90,160,100,0.4);
+      color: #2d6a45; padding: 6px 14px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 500; margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 4.5vw, 3.1rem); font-weight: 800;
+      line-height: 1.2; letter-spacing: -0.03em; margin-bottom: 20px;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, #1a98d8, #3f9f78);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p { font-size: 1.15rem; color: rgba(31,58,77,0.8); margin-bottom: 36px; max-width: 540px; }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 14px; }
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 56px; padding-top: 40px;
+      border-top: 1px solid rgba(31,58,77,0.14);
+    }
+    .stat-item strong { display: block; font-size: 1.25rem; font-weight: 800; color: var(--primary); line-height: 1.25; }
+    .stat-item span { font-size: 0.9rem; color: var(--text-muted); }
+
+    .gallery { padding: 0; margin-top: -40px; position: relative; z-index: 2; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+    .gallery-item {
+      border-radius: 14px; overflow: hidden; aspect-ratio: 4/3; position: relative;
+      padding: 3px;
+      background: linear-gradient(135deg, #7cc8ec, #a9dc9a, #7cc8ec);
+      box-shadow: var(--shadow-lg);
+    }
+    .gallery-item-inner {
+      width: 100%; height: 100%; border-radius: 11px; overflow: hidden;
+      position: relative; background: #dbe7ee;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-item .overlay {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 12px 14px;
+      background: linear-gradient(transparent, rgba(31,58,77,0.85));
+      color: white; font-size: 0.8rem; font-weight: 600;
+    }
+
+    .section { padding: 90px 0; }
+    .section-header { text-align: center; max-width: 620px; margin: 0 auto 56px; }
+    .section-header .label {
+      display: inline-block; color: #3f8f5f; font-weight: 600; font-size: 0.9rem;
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;
+    }
+    .section-header h2 {
+      font-size: clamp(1.75rem, 3.5vw, 2.4rem); font-weight: 800;
+      letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .section-header p { color: var(--text-muted); font-size: 1.05rem; }
+
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;
+    }
+    .service-card {
+      background: var(--white); border-radius: var(--radius); padding: 0;
+      box-shadow: var(--shadow); border: 1px solid rgba(31,58,77,0.07);
+      transition: all 0.25s; overflow: hidden;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .service-card .card-img-wrap {
+      padding: 3px;
+      background: linear-gradient(135deg, #7cc8ec, #a9dc9a);
+      border-radius: 12px 12px 0 0;
+    }
+    .service-card .card-img {
+      width: 100%; height: 170px; object-fit: cover; object-position: center;
+      display: block; border-radius: 10px 10px 0 0;
+    }
+    .service-card .card-body { padding: 24px 28px 28px; }
+    .service-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+    .service-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; }
+
+    .why-us { background: linear-gradient(135deg, #bfe4f5 0%, #d2edf8 100%); color: var(--primary); }
+    .why-us .section-header .label { color: var(--label); }
+    .why-us .section-header h2 { color: var(--primary); }
+    .why-us .section-header p { color: var(--text-muted); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px;
+    }
+    .why-item {
+      background: var(--white); border: 1px solid rgba(31,58,77,0.06);
+      border-radius: var(--radius); padding: 28px; transition: all 0.2s;
+      box-shadow: var(--shadow);
+    }
+    .why-item:hover { border-color: var(--sky); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .why-item .number {
+      font-size: 2rem; font-weight: 800;
+      background: linear-gradient(135deg, #2baee8, #6fbf73);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 12px;
+    }
+    .why-item h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: var(--primary); }
+    .why-item p { color: var(--text-muted); font-size: 0.95rem; }
+
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;
+    }
+    .step { text-align: center; padding: 24px 16px; }
+    .step-number {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, #7cc8ec, #a9dc9a);
+      color: var(--primary); border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-weight: 800; font-size: 1.25rem; margin: 0 auto 20px;
+    }
+    .step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .step p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;
+    }
+    .about-content h2 {
+      font-size: clamp(1.75rem, 3vw, 2.2rem); font-weight: 800;
+      margin-bottom: 20px; letter-spacing: -0.02em;
+    }
+    .about-content p { color: var(--text-muted); margin-bottom: 16px; font-size: 1.05rem; }
+    .about-highlights { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+    .highlight { display: flex; align-items: center; gap: 12px; font-weight: 500; }
+    .highlight::before {
+      content: '✓'; width: 24px; height: 24px; background: var(--mint-soft);
+      color: #3f8f5f; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+    }
+    .about-visual { position: relative; }
+    .about-visual-frame {
+      padding: 4px;
+      background: linear-gradient(135deg, #7cc8ec, #a9dc9a, #7cc8ec);
+      border-radius: 18px; box-shadow: var(--shadow-lg);
+    }
+    .about-visual-frame img {
+      width: 100%; height: 380px; object-fit: cover; object-position: center;
+      border-radius: 14px; display: block;
+    }
+
+    .contact {
+      background: linear-gradient(135deg, #d6eefa 0%, #e5f3e8 55%, #ebe4f5 100%); color: var(--primary);
+    }
+    .contact .section-header .label { color: var(--label); }
+    .contact .section-header h2 { color: var(--primary); }
+    .contact .section-header p { color: var(--text-muted); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 22px; }
+    .contact-item { display: flex; align-items: flex-start; gap: 16px; }
+    .contact-icon {
+      width: 48px; height: 48px; background: rgba(255,255,255,0.75);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0; box-shadow: var(--shadow);
+    }
+    .contact-item h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: var(--primary); }
+    .contact-item a, .contact-item span { color: var(--text-muted); font-size: 0.95rem; }
+    .contact-item a:hover { color: var(--label); }
+    .contact-cta {
+      background: var(--white); border: 1px solid rgba(31,58,77,0.07); box-shadow: var(--shadow);
+      border-radius: 16px; padding: 36px; text-align: center;
+    }
+    .contact-cta h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--primary); }
+    .contact-cta p { color: var(--text-muted); margin-bottom: 28px; font-size: 0.95rem; }
+    .contact-cta .btn { width: 100%; padding: 16px; font-size: 1.05rem; }
+
+    footer {
+      background: #1f3a4d; color: rgba(255,255,255,0.6);
+      padding: 36px 0; text-align: center; font-size: 0.9rem;
+    }
+    footer strong { color: rgba(255,255,255,0.85); }
+    footer .cnpj { margin-top: 8px; font-size: 0.85rem; color: rgba(255,255,255,0.4); }
+
+    .whatsapp-float {
+      position: fixed; bottom: 28px; right: 28px; width: 60px; height: 60px;
+      background: #25D366; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      z-index: 999; transition: all 0.25s;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.08); box-shadow: 0 6px 28px rgba(37, 211, 102, 0.5);
+    }
+    .whatsapp-float svg { width: 32px; height: 32px; fill: white; }
+
+    @media (max-width: 1000px) {
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+      .gallery-item:nth-child(4), .gallery-item:nth-child(5) { display: none; }
+    }
+    @media (max-width: 900px) {
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-visual-frame img { height: 280px; }
+      .hero-stats { gap: 28px; }
+    }
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .mobile-menu-btn { display: block; }
+      .hero { padding: 130px 0 70px; }
+      .hero-stats { flex-direction: column; gap: 20px; }
+      .section { padding: 70px 0; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .gallery-item:nth-child(4), .gallery-item:nth-child(5) { display: block; }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .logo-svg { height: 68px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="BMC Lab">
+        <svg class="logo-svg" viewBox="24 26 274 126" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BMC Soluções em Tecnologia"><defs><linearGradient id="bmcMetal" gradientUnits="userSpaceOnUse" x1="28" y1="0" x2="293" y2="0"><stop offset="0.000" stop-color="#e6e6e7"/><stop offset="0.075" stop-color="#e4e4e5"/><stop offset="0.151" stop-color="#dfdfe0"/><stop offset="0.226" stop-color="#cececf"/><stop offset="0.302" stop-color="#cbcbcc"/><stop offset="0.377" stop-color="#e1e1e2"/><stop offset="0.453" stop-color="#dededf"/><stop offset="0.528" stop-color="#ddddde"/><stop offset="0.604" stop-color="#dcdcdd"/><stop offset="0.679" stop-color="#ececed"/><stop offset="0.755" stop-color="#efeff0"/><stop offset="0.830" stop-color="#e4e4e5"/><stop offset="0.906" stop-color="#cfcfd0"/><stop offset="1.000" stop-color="#eeeeef"/></linearGradient></defs>
+<path fill="url(#bmcMetal)" fill-rule="evenodd" d="M190.7,35.3 L188.4,36.3 L186.6,37.8 L179.1,47.1 L173.3,53.1 L167.6,60.3 L167.5,61.4 L173.1,69.6 L178.1,75.8 L179.5,76.9 L180.6,76.7 L182.2,75.2 L189.2,66.5 L190.0,66.1 L190.7,66.5 L191.1,68.2 L191.1,102.1 L191.9,104.2 L193.5,104.8 L211.1,104.8 L212.1,104.2 L212.4,103.0 L211.8,99.6 L211.8,65.9 L210.7,37.8 L209.5,35.9 L207.7,35.1ZM55.4,35.5 L55.0,37.0 L62.4,48.7 L64.6,50.6 L98.9,51.1 L101.3,51.9 L103.0,53.3 L103.9,54.9 L103.8,57.3 L101.6,59.7 L99.2,60.3 L66.2,60.5 L58.8,61.2 L54.7,62.7 L52.3,65.0 L29.8,101.8 L29.2,103.3 L29.8,104.5 L44.1,104.9 L104.4,104.7 L109.5,103.8 L112.9,102.4 L115.8,100.4 L119.4,96.9 L122.5,92.4 L123.7,88.8 L123.7,80.1 L121.3,73.2 L115.8,67.7 L115.4,66.5 L118.9,62.4 L120.5,59.7 L121.8,54.5 L121.8,51.5 L120.1,44.8 L118.6,42.3 L115.2,38.8 L111.7,36.4 L107.6,35.1 L65.7,35.0 L56.6,35.1ZM104.0,81.0 L104.0,83.4 L102.9,85.6 L101.6,86.7 L98.4,87.9 L61.4,87.8 L60.5,86.9 L64.4,78.3 L65.3,77.1 L66.8,76.4 L98.1,76.2 L102.0,77.6 L103.3,79.1ZM129.3,35.0 L128.3,35.4 L127.5,36.7 L126.9,48.9 L127.2,78.7 L126.8,92.5 L127.2,101.5 L128.4,103.5 L131.0,104.6 L143.5,104.8 L145.3,103.8 L145.9,101.9 L145.8,71.5 L146.4,69.8 L147.3,69.9 L158.0,84.4 L163.0,92.2 L164.8,93.7 L166.3,93.7 L167.8,92.6 L174.5,84.8 L176.9,81.3 L177.3,79.6 L171.4,70.9 L166.7,65.1 L150.1,41.8 L145.9,36.6 L142.4,35.1ZM288.3,35.3 L287.6,34.7 L285.9,34.4 L236.3,34.6 L231.5,35.1 L228.3,36.1 L224.8,37.8 L222.2,39.8 L219.7,42.8 L217.5,47.3 L216.2,52.0 L216.0,86.9 L217.3,92.1 L221.1,98.0 L224.4,100.9 L227.1,102.5 L230.2,103.6 L235.8,104.7 L288.5,104.8 L289.7,104.4 L290.0,102.8 L283.2,90.0 L281.2,88.5 L279.7,88.1 L241.6,87.9 L237.4,86.5 L236.0,84.9 L234.9,81.8 L235.0,57.8 L236.0,55.2 L237.4,53.6 L239.5,52.6 L241.8,52.2 L274.7,52.8 L277.8,51.9 L281.4,49.1 L284.6,44.5 L288.2,37.8 L288.6,36.5Z"/>
+<path fill="#dcdddf" fill-rule="evenodd" d="M288.2,118.3 L287.7,118.6 L287.3,119.1 L287.0,120.2 L286.2,121.4 L285.9,123.0 L285.2,124.2 L284.9,125.5 L284.1,126.8 L284.0,128.4 L284.2,128.7 L284.6,128.9 L285.2,128.9 L285.8,128.4 L286.1,127.5 L286.6,127.0 L290.2,126.9 L290.8,127.3 L291.1,128.3 L291.5,128.8 L291.8,128.9 L292.8,128.8 L293.1,128.5 L292.9,126.7 L292.6,125.9 L292.0,125.0 L291.7,123.4 L290.9,122.2 L290.7,121.0 L289.5,118.8 L288.9,118.3ZM288.3,121.8 L288.6,121.8 L288.9,122.1 L289.7,124.1 L289.6,124.6 L289.2,124.9 L288.3,124.9 L288.0,124.8 L287.6,124.4 L287.9,122.3ZM278.2,118.3 L277.8,118.6 L277.5,119.1 L277.2,120.5 L277.1,127.3 L277.2,128.0 L277.7,128.7 L278.2,128.9 L278.8,128.9 L279.5,128.5 L279.8,127.7 L279.6,123.0 L279.5,122.9 L279.5,119.4 L279.2,118.7 L278.9,118.4ZM65.8,118.4 L65.3,118.9 L65.0,120.0 L65.0,126.6 L65.9,128.3 L66.4,128.8 L67.2,129.0 L71.7,129.0 L72.3,128.9 L72.9,128.6 L73.8,127.6 L74.0,126.9 L74.0,123.8 L73.9,123.7 L74.0,119.2 L73.8,118.6 L73.5,118.3 L72.8,118.3 L72.5,118.5 L72.1,119.3 L72.0,126.1 L71.8,126.6 L71.2,127.0 L68.7,127.0 L68.0,126.7 L67.5,125.8 L67.5,124.2 L67.3,122.8 L67.3,120.0 L67.1,119.0 L66.9,118.6 L66.5,118.3ZM54.6,118.4 L54.3,118.7 L54.0,119.4 L54.0,127.8 L54.2,128.4 L54.7,128.8 L57.5,128.8 L57.6,128.9 L61.2,128.9 L61.8,128.4 L61.8,127.7 L61.6,127.3 L61.3,127.1 L60.5,126.9 L57.7,127.0 L57.0,126.8 L56.6,126.4 L56.4,122.4 L56.3,122.3 L56.3,120.7 L56.4,120.6 L56.3,119.3 L56.1,118.7 L55.7,118.3 L55.0,118.2ZM252.5,118.2 L251.8,118.7 L250.3,120.2 L250.1,120.6 L250.0,126.4 L250.2,127.2 L250.9,128.3 L251.7,128.9 L252.3,129.0 L256.9,129.0 L257.4,128.9 L258.5,128.1 L258.9,127.4 L259.1,126.5 L259.1,123.2 L259.0,123.1 L259.0,121.5 L258.8,119.8 L258.4,119.2 L256.5,118.1 L252.8,118.1ZM253.4,120.0 L253.9,119.9 L256.0,120.0 L256.3,120.1 L257.0,121.0 L257.0,125.9 L256.8,126.5 L256.3,126.9 L253.1,127.0 L252.5,126.8 L252.1,126.4 L251.9,121.7 L252.3,120.8ZM227.8,118.2 L226.6,119.0 L225.9,119.7 L225.2,120.8 L225.1,121.2 L225.1,126.6 L225.2,126.9 L226.2,128.4 L226.9,128.8 L232.0,128.9 L232.7,128.7 L233.6,127.9 L234.0,127.0 L234.2,126.0 L234.1,121.6 L233.9,119.8 L233.3,119.0 L232.6,118.5 L231.7,118.1ZM228.5,120.0 L228.9,119.9 L231.2,120.0 L231.8,120.5 L232.0,120.9 L232.1,125.8 L231.9,126.5 L231.3,127.0 L230.8,127.1 L228.2,127.0 L227.6,126.7 L227.2,126.0 L227.2,121.9 L227.8,120.6ZM212.3,118.3 L211.8,119.3 L211.8,125.7 L211.9,125.8 L211.8,127.6 L212.0,128.3 L212.5,128.7 L212.9,128.7 L213.4,128.4 L213.7,127.8 L213.8,123.9 L214.2,123.2 L214.7,123.2 L215.2,123.7 L216.2,125.6 L216.9,126.4 L217.6,127.8 L218.4,128.7 L218.9,128.9 L220.0,128.9 L220.5,128.7 L220.9,128.0 L220.8,119.5 L220.6,119.0 L220.1,118.5 L219.8,118.4 L219.4,118.5 L219.1,118.8 L219.0,119.1 L219.0,124.2 L218.6,124.7 L218.1,124.7 L216.9,123.5 L216.5,122.6 L215.0,120.3 L214.4,119.1 L213.4,118.2 L212.7,118.1ZM150.4,118.8 L150.0,119.7 L150.0,121.6 L150.1,121.7 L150.1,128.0 L150.5,128.6 L151.3,128.8 L151.8,128.6 L152.1,128.2 L152.2,127.4 L152.1,127.3 L152.0,123.4 L152.3,123.0 L152.6,123.0 L152.9,123.3 L153.2,124.1 L154.0,125.2 L154.4,126.4 L155.0,127.3 L155.6,127.8 L156.3,127.8 L156.8,127.4 L157.8,125.5 L158.2,124.4 L159.1,123.5 L159.5,123.4 L159.7,123.7 L159.9,128.3 L160.4,128.7 L161.1,128.7 L161.6,128.3 L161.8,127.8 L161.8,119.6 L161.5,118.9 L161.0,118.4 L160.3,118.1 L159.9,118.1 L159.2,118.5 L158.1,120.5 L158.1,120.9 L157.8,121.7 L157.2,122.4 L156.8,124.1 L156.1,124.6 L155.5,124.5 L155.1,124.1 L154.9,123.7 L154.7,122.4 L154.0,121.5 L153.7,120.1 L152.9,118.7 L152.2,118.1 L151.3,118.1ZM119.6,118.2 L117.9,119.4 L117.3,120.1 L117.0,121.2 L117.1,122.5 L117.4,123.1 L117.8,123.5 L119.9,124.6 L120.6,124.8 L122.4,124.9 L123.0,125.5 L123.0,126.4 L122.7,126.8 L122.0,127.1 L119.6,127.1 L117.7,126.9 L117.3,127.2 L117.3,127.8 L117.7,128.4 L118.4,128.8 L118.9,128.9 L123.4,128.9 L124.1,128.7 L124.6,128.3 L124.9,127.7 L125.1,126.7 L125.0,124.9 L124.6,123.8 L124.1,123.3 L123.5,123.1 L120.9,123.0 L120.3,122.8 L119.2,121.9 L119.1,121.0 L119.6,120.4 L120.6,119.9 L122.3,119.9 L123.6,120.8 L124.3,120.8 L124.8,120.3 L124.8,119.5 L123.9,118.5 L123.4,118.2 L123.0,118.1 L119.9,118.1ZM106.1,118.5 L105.4,119.1 L105.1,119.6 L105.0,120.1 L105.0,128.2 L105.2,128.6 L105.7,128.9 L112.1,128.9 L112.4,128.8 L112.8,128.3 L112.8,127.8 L112.5,127.3 L111.7,127.0 L107.8,126.9 L107.2,126.5 L107.1,125.7 L107.6,125.1 L108.2,124.9 L111.3,124.8 L111.7,124.5 L111.9,124.1 L111.8,123.3 L111.2,122.9 L108.3,122.7 L107.7,122.4 L107.2,121.7 L107.2,120.7 L107.4,120.4 L108.4,119.9 L111.9,120.0 L112.2,119.9 L112.6,119.5 L112.5,118.8 L112.1,118.4 L111.3,118.1 L107.2,118.1ZM265.3,118.5 L264.2,119.3 L263.9,120.4 L263.7,125.9 L263.9,127.1 L264.2,127.7 L265.1,128.6 L265.9,128.9 L270.8,128.9 L271.5,128.7 L272.0,128.2 L272.9,126.5 L272.9,124.1 L272.7,123.5 L272.2,123.1 L271.3,122.9 L269.0,122.9 L268.4,123.1 L268.0,123.6 L268.1,124.5 L268.6,124.9 L269.9,125.1 L270.3,125.5 L270.3,126.0 L269.8,126.7 L269.1,127.0 L267.0,127.0 L266.3,126.7 L266.0,126.2 L265.9,122.1 L266.2,120.8 L266.6,120.4 L267.6,120.1 L269.1,120.2 L270.6,121.1 L271.3,121.3 L271.7,121.2 L272.1,120.8 L272.2,120.0 L271.9,119.3 L271.0,118.4 L270.3,118.0 L266.4,118.0ZM239.3,118.2 L239.0,118.7 L239.0,127.7 L239.2,128.4 L239.7,128.8 L244.4,128.8 L244.8,128.9 L245.8,128.7 L246.1,128.4 L246.2,128.0 L246.0,127.5 L245.4,127.1 L245.0,127.0 L242.0,127.1 L241.4,126.9 L241.0,126.5 L240.8,125.7 L240.9,125.5 L240.9,118.7 L240.4,118.1 L240.1,118.0ZM200.7,118.2 L199.6,118.9 L199.1,119.4 L198.4,121.7 L198.4,124.9 L198.6,126.3 L199.0,127.5 L199.8,128.5 L200.4,128.8 L201.1,128.9 L205.1,128.9 L206.1,128.5 L206.5,128.1 L206.8,127.5 L206.8,126.6 L206.4,126.1 L206.1,126.0 L205.4,126.1 L204.6,126.8 L204.1,127.0 L201.8,127.0 L201.5,126.9 L201.0,126.4 L200.9,126.1 L200.9,121.8 L201.2,120.8 L201.6,120.4 L202.5,120.1 L204.1,120.2 L205.5,121.3 L206.2,121.3 L206.8,120.7 L206.9,120.4 L206.8,119.5 L206.5,119.1 L205.6,118.5 L204.3,118.0 L201.3,118.0ZM187.2,118.2 L186.8,118.6 L186.5,119.5 L186.7,121.1 L186.7,127.6 L186.9,128.3 L187.3,128.7 L187.6,128.8 L192.2,128.8 L192.7,128.9 L193.5,128.7 L193.9,128.2 L193.8,127.5 L193.3,127.1 L189.9,127.1 L189.3,126.9 L188.9,126.5 L188.8,125.4 L189.2,124.9 L189.6,124.7 L192.2,124.7 L193.0,124.3 L193.3,123.8 L193.2,123.4 L192.7,123.1 L189.8,123.0 L189.3,122.8 L188.9,122.2 L188.9,120.9 L189.1,120.4 L189.7,120.0 L193.1,120.0 L193.4,119.9 L193.9,119.4 L193.8,118.4 L193.3,118.0 L187.6,118.0ZM181.0,118.0 L174.7,118.1 L174.1,118.7 L174.1,119.3 L174.5,119.9 L175.0,120.1 L176.4,120.2 L176.9,120.8 L177.0,121.2 L177.0,128.2 L177.4,128.8 L178.2,128.9 L178.6,128.7 L178.9,128.2 L179.0,121.1 L179.2,120.7 L179.8,120.2 L181.2,120.2 L181.8,120.0 L182.2,119.6 L182.1,118.7 L181.8,118.3ZM138.6,118.2 L138.2,118.6 L138.0,119.1 L138.0,128.1 L138.1,128.4 L138.7,128.9 L144.9,128.9 L145.4,128.7 L145.6,128.5 L145.6,127.8 L145.3,127.4 L144.7,127.1 L140.9,127.0 L140.4,126.8 L140.0,126.3 L140.0,125.6 L140.6,125.0 L143.6,124.9 L144.4,124.6 L144.8,124.0 L144.7,123.3 L144.2,122.9 L141.8,122.8 L140.6,122.6 L140.2,122.2 L140.0,121.6 L140.0,121.1 L140.2,120.6 L140.9,120.1 L142.3,120.1 L142.4,120.0 L144.3,120.1 L145.2,119.9 L145.6,119.5 L145.6,119.0 L145.4,118.6 L145.1,118.3 L144.4,118.0 L139.2,118.0ZM85.3,118.0 L81.1,118.1 L79.7,118.9 L79.3,119.3 L79.0,120.1 L79.0,126.6 L79.1,127.3 L79.5,128.0 L80.0,128.5 L81.4,129.1 L81.8,129.5 L81.9,130.4 L81.7,130.9 L81.7,131.5 L82.1,131.8 L82.9,131.9 L83.9,131.6 L84.5,131.0 L84.7,130.6 L84.8,129.4 L85.4,128.9 L86.4,128.7 L86.7,128.4 L87.0,127.6 L87.0,126.7 L86.5,126.2 L86.2,126.2 L84.8,127.0 L81.9,127.1 L81.4,126.9 L81.0,126.5 L80.8,125.9 L80.8,121.8 L81.0,120.8 L81.5,120.2 L82.1,120.0 L84.2,120.0 L86.0,121.2 L86.5,121.2 L86.9,120.9 L87.1,120.0 L86.8,119.2 L85.8,118.2ZM43.6,118.1 L42.6,118.8 L41.3,120.1 L41.1,120.6 L41.1,127.0 L41.5,127.8 L42.4,128.7 L43.3,128.9 L43.7,128.8 L47.3,128.8 L47.4,128.9 L48.3,128.8 L48.7,128.6 L49.6,127.7 L49.9,127.0 L50.0,121.2 L49.8,119.7 L49.2,119.0 L48.5,118.5 L47.4,118.0ZM44.3,120.1 L44.7,120.0 L46.5,120.1 L47.2,120.4 L47.9,121.3 L48.0,121.7 L48.0,126.3 L47.3,127.0 L44.0,127.1 L43.4,126.9 L42.9,126.3 L42.9,121.7 L43.2,121.0ZM30.9,118.2 L29.6,119.0 L29.1,119.5 L28.8,120.7 L28.8,122.3 L29.1,123.4 L29.8,124.0 L31.2,124.7 L34.3,124.9 L34.9,125.4 L35.0,126.3 L34.7,126.8 L34.0,127.1 L31.4,127.1 L30.4,126.9 L29.5,126.9 L29.2,127.1 L29.0,127.5 L29.0,128.2 L29.5,128.8 L29.8,128.9 L34.9,128.9 L35.3,128.8 L35.8,128.5 L36.8,127.3 L36.9,125.3 L36.7,124.4 L35.6,123.3 L35.2,123.1 L32.4,123.0 L31.5,122.7 L31.0,122.1 L30.9,121.2 L31.1,120.6 L31.4,120.3 L32.2,120.0 L33.5,120.0 L34.2,120.2 L35.1,120.8 L36.1,120.9 L36.6,120.4 L36.6,119.8 L36.4,119.4 L35.5,118.5 L34.8,118.1 L31.6,118.0ZM94.6,115.4 L93.4,116.3 L93.3,117.1 L93.5,117.6 L93.5,118.1 L92.9,118.8 L92.1,119.4 L91.9,120.0 L91.9,121.3 L91.7,122.7 L91.7,126.1 L92.0,127.3 L92.4,128.1 L92.9,128.6 L93.7,128.9 L94.7,128.9 L94.8,129.0 L99.2,128.9 L99.9,128.4 L100.6,127.3 L100.9,126.5 L100.9,122.0 L100.7,120.9 L99.6,119.2 L98.2,117.9 L98.1,117.4 L98.6,116.3 L98.4,115.9 L97.8,115.8 L96.7,116.0 L95.5,115.4ZM97.1,119.9 L97.6,120.1 L98.2,120.7 L98.6,121.6 L98.7,122.6 L98.6,122.7 L98.5,126.1 L97.9,126.8 L97.4,127.0 L95.5,127.0 L95.4,127.1 L94.6,127.0 L94.0,126.5 L93.8,126.0 L93.8,123.6 L93.9,123.5 L94.0,120.8 L94.5,120.2 L95.0,120.0Z"/>
+<path fill="#f3f4f6" d="M293.6,141.1 L293.5,141.0 L293.5,140.8 L293.2,140.4 L292.9,140.2 L292.2,140.1 L292.1,140.0 L278.2,140.0 L278.1,140.1 L272.2,140.1 L272.1,140.0 L263.5,140.0 L263.4,140.1 L256.3,140.1 L256.2,140.0 L253.8,140.0 L253.7,140.1 L208.0,140.1 L207.9,140.2 L192.2,140.2 L192.1,140.1 L185.2,140.1 L185.1,140.0 L178.5,140.0 L178.4,140.1 L143.5,140.1 L143.4,140.2 L141.5,140.2 L141.4,140.1 L140.0,140.1 L139.9,140.2 L138.0,140.2 L137.9,140.1 L134.7,140.1 L134.6,140.2 L132.0,140.2 L131.9,140.1 L108.8,140.1 L108.7,140.2 L76.7,140.1 L76.6,140.2 L67.4,140.2 L67.3,140.1 L66.4,140.1 L66.3,140.2 L56.0,140.2 L55.9,140.3 L46.0,140.3 L45.9,140.2 L29.2,140.2 L28.7,140.4 L28.3,140.8 L28.2,141.4 L28.3,141.6 L28.7,141.9 L292.8,141.9 L293.3,141.7 L293.5,141.5Z"/>
+<path fill="#ebecee" fill-rule="evenodd" d="M121.9,154.2 L121.2,154.5 L120.3,155.2 L120.0,155.8 L119.9,156.8 L120.3,158.0 L120.9,158.6 L121.7,158.9 L122.5,158.9 L123.3,158.6 L123.8,158.2 L124.5,157.1 L124.5,156.3 L124.0,155.4 L123.1,154.5 L122.4,154.2ZM198.3,154.1 L197.7,154.4 L196.5,155.6 L196.2,156.2 L196.2,157.0 L196.8,158.1 L197.3,158.7 L198.0,159.0 L199.2,159.0 L200.2,158.6 L200.6,158.2 L201.0,157.1 L201.0,156.0 L200.6,155.1 L199.9,154.5 L199.2,154.1ZM234.5,153.2 L233.8,153.2 L233.4,153.5 L233.1,154.4 L233.2,157.5 L232.9,158.1 L232.5,158.4 L232.1,158.4 L231.7,158.2 L231.0,157.5 L230.9,157.2 L231.0,154.1 L230.8,153.5 L230.6,153.3 L230.0,153.3 L229.5,153.7 L229.3,154.2 L229.4,156.9 L229.9,158.8 L230.3,159.6 L231.1,159.9 L232.6,159.9 L233.7,159.7 L234.5,159.1 L234.8,158.4 L234.9,157.7 L234.9,153.7ZM257.5,153.2 L257.1,153.7 L257.1,156.2 L257.0,156.3 L257.0,159.1 L257.1,159.4 L257.6,159.8 L258.2,159.8 L258.7,159.4 L258.9,158.7 L259.5,158.2 L259.9,158.4 L260.5,159.2 L261.2,159.7 L261.9,159.6 L262.2,159.2 L262.2,158.7 L261.9,157.6 L262.0,156.4 L262.2,156.0 L262.2,154.9 L261.7,153.4 L261.2,153.1 L257.7,153.1ZM259.1,155.4 L259.4,155.0 L259.9,155.0 L260.2,155.3 L260.2,155.6 L259.7,155.9 L259.4,155.8ZM248.7,153.4 L248.1,154.3 L247.6,156.2 L247.7,157.4 L248.2,159.1 L248.6,159.6 L249.7,159.9 L251.4,159.9 L252.3,159.7 L252.8,159.1 L253.4,157.1 L253.4,155.9 L252.6,153.7 L252.2,153.3 L251.7,153.1 L249.4,153.1ZM250.3,154.5 L251.3,154.8 L251.9,155.4 L252.1,156.1 L251.9,157.5 L251.3,158.1 L250.7,158.4 L250.2,158.4 L249.6,158.1 L249.0,157.5 L248.8,157.0 L248.9,155.5 L249.3,155.0ZM221.8,153.2 L221.3,153.6 L221.0,154.7 L221.1,156.2 L221.7,156.8 L222.6,156.9 L223.1,157.1 L223.5,157.5 L223.5,157.8 L223.2,158.1 L221.4,158.2 L221.0,158.6 L221.0,159.2 L221.5,159.8 L221.8,159.9 L224.6,159.8 L225.2,159.5 L225.8,158.6 L225.9,158.1 L225.8,157.1 L225.2,156.3 L223.8,155.9 L223.4,155.5 L223.4,155.1 L223.9,154.8 L224.9,154.9 L225.4,154.7 L225.6,154.5 L225.6,153.8 L225.4,153.5 L224.6,153.1ZM178.6,153.1 L177.9,153.4 L177.2,154.2 L177.1,155.7 L177.3,156.2 L177.6,156.5 L179.3,157.1 L179.6,157.5 L179.6,157.9 L179.3,158.2 L177.7,158.1 L177.3,158.3 L177.1,158.6 L177.1,159.3 L177.4,159.7 L178.0,159.9 L180.6,159.8 L181.3,159.5 L181.8,158.7 L181.9,158.2 L181.8,157.1 L181.4,156.4 L180.7,156.1 L179.6,155.9 L179.3,155.6 L179.2,155.1 L179.6,154.7 L181.2,154.8 L181.6,154.5 L181.7,154.0 L181.6,153.7 L181.2,153.3 L180.7,153.1ZM151.6,153.2 L151.2,153.6 L151.0,154.7 L151.0,159.1 L151.1,159.4 L151.5,159.8 L151.8,159.9 L155.2,159.9 L155.4,159.8 L155.7,159.4 L155.7,159.1 L155.5,158.7 L154.5,157.9 L154.5,157.7 L155.3,156.9 L155.4,156.5 L155.0,156.1 L153.7,155.9 L153.3,155.5 L153.3,155.3 L153.9,154.8 L154.7,154.7 L155.4,154.4 L155.7,153.9 L155.6,153.4 L155.2,153.1 L151.9,153.1ZM142.5,153.2 L142.2,153.5 L142.0,154.2 L142.0,159.0 L142.2,159.5 L142.8,159.9 L143.4,159.8 L143.7,159.5 L144.0,158.6 L144.5,158.2 L144.8,158.3 L146.1,159.6 L146.6,159.8 L147.1,159.7 L147.4,159.4 L147.4,158.7 L147.0,157.9 L147.0,157.1 L147.7,155.8 L147.7,155.1 L146.9,153.7 L146.4,153.2 L146.1,153.1 L142.8,153.1ZM144.2,155.4 L144.5,155.0 L145.1,154.9 L145.6,155.3 L145.6,155.6 L145.1,156.0 L144.7,156.0 L144.3,155.7ZM72.6,153.1 L72.2,153.4 L71.8,154.3 L71.3,155.0 L71.0,156.4 L70.1,158.0 L70.0,159.2 L70.3,159.6 L70.9,159.6 L71.4,159.2 L72.1,158.9 L73.4,158.9 L74.6,159.8 L75.3,159.8 L75.8,159.3 L75.8,158.6 L75.0,157.4 L74.8,155.6 L74.2,154.7 L73.6,153.3 L73.3,153.1ZM65.9,153.2 L62.9,153.1 L62.6,153.2 L62.2,153.6 L62.0,158.9 L62.2,159.5 L62.5,159.8 L62.9,159.9 L63.4,159.8 L63.7,159.5 L63.9,158.7 L64.3,158.1 L66.0,157.6 L66.9,156.6 L67.2,155.8 L67.2,155.2 L66.6,153.8ZM64.1,155.4 L64.5,154.9 L65.0,154.8 L65.3,154.9 L65.7,155.5 L65.2,156.0 L64.6,156.0 L64.2,155.7ZM278.4,153.2 L277.6,153.0 L277.4,153.1 L274.8,153.1 L274.3,153.4 L274.0,154.4 L274.0,158.2 L274.1,158.9 L274.6,159.6 L275.7,159.9 L277.9,159.9 L278.6,159.5 L278.6,159.0 L278.4,158.7 L277.9,158.4 L276.9,158.3 L276.3,157.9 L276.3,157.4 L276.7,157.0 L277.9,156.9 L278.4,156.6 L278.4,156.2 L278.2,156.0 L277.1,155.8 L276.6,155.4 L276.6,155.2 L276.9,154.9 L278.1,154.5 L278.6,154.0 L278.6,153.4ZM265.9,153.2 L265.6,153.5 L265.6,154.0 L266.8,155.2 L267.0,155.7 L267.1,159.2 L267.5,159.7 L268.3,159.8 L268.9,159.2 L268.9,158.1 L269.0,158.0 L268.9,156.0 L269.1,155.2 L269.6,154.7 L270.4,154.2 L270.6,153.9 L270.6,153.4 L270.3,153.1 L269.9,153.0 L266.9,153.0ZM243.0,153.3 L241.7,153.0 L240.1,153.0 L239.6,153.1 L239.2,153.4 L239.0,153.8 L239.1,159.2 L239.4,159.6 L239.6,159.7 L240.2,159.6 L240.6,159.2 L240.9,158.4 L241.3,158.0 L242.7,157.6 L243.6,156.7 L243.9,156.0 L243.9,154.8 L243.6,153.9ZM241.0,155.3 L241.3,154.9 L242.0,154.8 L242.5,155.2 L242.5,155.6 L242.0,156.0 L241.6,156.0 L241.0,155.5ZM169.4,153.1 L168.6,153.7 L168.3,154.4 L168.2,155.3 L168.3,155.4 L168.4,158.6 L168.7,159.2 L169.5,159.8 L171.3,159.8 L171.4,159.9 L172.3,159.8 L172.7,159.4 L172.6,158.7 L172.1,158.4 L171.2,158.4 L170.8,158.2 L170.5,157.6 L170.8,157.2 L171.2,157.0 L172.2,156.8 L172.4,156.3 L172.0,156.0 L171.2,156.0 L170.7,155.8 L170.5,155.6 L170.5,155.3 L170.9,154.9 L171.7,154.8 L172.5,154.5 L172.8,154.0 L172.8,153.6 L172.5,153.2 L171.8,153.0ZM159.7,153.3 L159.3,153.7 L159.0,154.7 L159.0,158.7 L159.2,159.4 L159.7,159.8 L161.0,160.0 L163.0,159.9 L163.8,159.6 L164.6,158.8 L164.9,158.0 L164.9,154.6 L164.7,154.2 L163.7,153.2 L163.2,153.0 L160.5,153.0ZM162.2,154.9 L162.6,155.1 L163.1,155.8 L163.0,157.5 L162.4,158.2 L162.1,158.3 L161.6,158.2 L161.1,157.7 L161.0,157.4 L161.0,155.6 L161.5,155.0ZM97.7,153.1 L97.1,153.6 L96.6,155.0 L96.7,155.9 L97.4,156.8 L98.8,157.3 L99.0,157.8 L98.8,158.0 L97.4,158.1 L97.0,158.5 L97.0,159.2 L97.4,159.7 L97.9,159.9 L100.5,159.8 L101.1,159.5 L101.7,158.8 L101.9,158.3 L101.9,157.4 L101.7,156.9 L101.2,156.3 L100.7,156.0 L99.5,155.7 L99.3,155.3 L99.7,155.0 L101.1,155.0 L101.5,154.8 L101.7,154.5 L101.7,154.0 L101.3,153.4 L100.3,153.0ZM89.1,153.1 L88.4,153.5 L87.6,155.8 L87.5,157.0 L88.0,159.0 L88.5,159.7 L89.1,159.9 L92.0,159.9 L92.3,159.8 L92.8,159.4 L93.6,157.2 L93.6,156.1 L92.6,153.6 L92.3,153.3 L91.8,153.1 L91.0,153.0ZM90.1,154.6 L90.7,154.6 L91.5,155.0 L91.9,155.5 L92.0,155.9 L92.0,156.7 L91.7,157.6 L91.3,158.0 L90.7,158.3 L90.1,158.3 L89.2,157.7 L88.9,157.1 L88.9,155.7 L89.5,154.9ZM79.4,153.2 L79.1,153.6 L79.0,154.1 L79.1,154.9 L79.1,158.3 L79.0,158.6 L79.2,159.4 L79.8,159.8 L80.3,159.7 L80.7,159.3 L81.0,158.4 L81.3,158.2 L81.7,158.2 L82.9,159.4 L83.3,159.6 L84.0,159.5 L84.1,158.8 L83.7,157.8 L83.7,156.8 L84.1,155.7 L84.1,154.6 L83.7,153.6 L83.3,153.2 L82.4,153.0 L80.0,153.0ZM81.1,155.1 L81.5,154.7 L82.0,154.7 L82.6,155.2 L82.6,155.6 L82.2,156.0 L81.6,156.0 L81.2,155.7ZM54.3,153.2 L54.0,153.7 L54.0,158.9 L54.1,159.3 L54.3,159.6 L55.2,159.9 L56.0,159.8 L57.5,159.9 L58.2,159.7 L58.4,159.3 L58.3,159.0 L57.8,158.6 L56.6,158.4 L56.2,158.0 L56.2,157.6 L56.5,157.2 L57.4,156.9 L57.7,156.6 L57.7,156.3 L57.4,156.0 L56.8,155.9 L56.4,155.6 L56.3,155.4 L56.7,154.9 L57.4,154.7 L58.1,154.3 L58.4,153.9 L58.4,153.4 L58.0,153.1 L57.5,153.0 L54.7,153.0ZM45.6,153.1 L45.2,153.4 L45.0,153.9 L45.0,159.1 L45.1,159.4 L45.5,159.7 L46.1,159.6 L46.6,158.5 L47.1,158.1 L47.5,158.1 L48.1,158.6 L48.7,159.5 L49.1,159.7 L49.6,159.6 L49.9,159.3 L49.9,158.6 L49.6,157.9 L49.6,157.0 L50.1,155.6 L50.0,154.8 L49.7,154.0 L49.2,153.4 L48.6,153.1 L48.0,153.0ZM47.1,155.3 L47.3,155.1 L47.9,155.1 L48.2,155.5 L47.9,155.8 L47.3,155.8 L47.1,155.6Z"/></svg>
+      </a>
+      <nav>
+        <a href="#servicos">Serviços</a>
+        <a href="#diferenciais">Diferenciais</a>
+        <a href="#como-funciona">Como Funciona</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato" class="btn btn-sky" style="padding: 10px 20px;">Contato</a>
+      </nav>
+      <button class="mobile-menu-btn" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>🔧</span> Reparos Avançados • Manutenção • Redes
+        </div>
+        <h1><span>Construindo Ideias,</span><br>Administrando Soluções</h1>
+        <p>
+          Especialistas em reparos avançados, manutenção de equipamentos e soluções em redes. 
+          Atendimentos presenciais e remotos, com visitas e entregas a domicílio.
+        </p>
+        <div class="hero-buttons">
+          <a href="https://wa.me/5531990119010?text=Olá!%20Gostaria%20de%20um%20orçamento%20da%20BMC%20Lab" 
+             class="btn btn-whatsapp" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Chamar no WhatsApp
+          </a>
+          <a href="#servicos" class="btn btn-outline">Ver Serviços</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item"><strong>Direto com o técnico</strong><span>Sem demora e sem enrolação</span></div>
+          <div class="stat-item"><strong>Suporte Remoto</strong><span>Praticidade e conforto online</span></div>
+          <div class="stat-item"><strong>Orçamentos prévios</strong><span>Saiba antes sobre peças e valores</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery">
+    <div class="container">
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <div class="gallery-item-inner">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&h=450&q=80" alt="Placa de circuito eletrônico" loading="lazy">
+            <div class="overlay">Placas e circuitos</div>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-inner">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&h=450&q=80" alt="Administração de servidores" loading="lazy">
+            <div class="overlay">Administração de Servidores</div>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-inner">
+            <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=600&h=450&q=80" alt="Computador e hardware" loading="lazy">
+            <div class="overlay">Computadores</div>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-inner">
+            <img src="https://images.unsplash.com/photo-1606904825846-647eb07f5be2?auto=format&fit=crop&w=600&h=450&q=80" alt="Roteadores e redes" loading="lazy">
+            <div class="overlay">Roteadores e redes</div>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-inner">
+            <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&h=450&q=80" alt="Atendimento e entrega a domicílio" loading="lazy">
+            <div class="overlay">Visitas a domicílio</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="servicos">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">O que fazemos</span>
+        <h2>Serviços especializados</h2>
+        <p>Do diagnóstico profundo ao reparo avançado. Soluções completas com atendimento a domicílio e envio por frete.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="card-img-wrap">
+            <img class="card-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&h=340&q=80" alt="Reparo de placa eletrônica" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Reparos Avançados</h3>
+            <p>Diagnóstico e reparo de notebooks, desktops, placas-mãe, fontes e componentes SMD. Quando o conserto comum não resolve, nós resolvemos.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="card-img-wrap">
+            <img class="card-img" src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=600&h=340&q=80" alt="Manutenção de computador" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Manutenção Preventiva</h3>
+            <p>Limpeza, troca de pasta térmica, verificação de hardware e otimização de sistemas para evitar problemas antes que aconteçam.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="card-img-wrap">
+            <img class="card-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&h=340&q=80" alt="Infraestrutura de rede" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Redes e Infraestrutura</h3>
+            <p>Instalação e configuração de redes, roteadores, cabeamento estruturado, Wi-Fi empresarial e solução de problemas de conectividade.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="card-img-wrap">
+            <img class="card-img" src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&h=340&q=80" alt="Visita técnica a domicílio" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Visitas e Entregas a Domicílio</h3>
+            <p>Atendimento presencial na sua empresa ou residência. Também realizamos entrega de equipamentos e envio por fretes exclusivos.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="card-img-wrap">
+            <img class="card-img" src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&h=340&q=80" alt="Segurança de dados e backup" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Backup e Segurança</h3>
+            <p>Proteção de dados, backup de arquivos, recuperação de informações e orientações de segurança para evitar perdas.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="card-img-wrap">
+            <img class="card-img" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&h=340&q=80" alt="Contratos de manutenção empresarial" loading="lazy">
+          </div>
+          <div class="card-body">
+            <h3>Contratos de Manutenção Empresarial</h3>
+            <p>Planos mensais de manutenção preventiva e corretiva para empresas. Visitas programadas, suporte prioritário, redução de paradas e custo previsível para o setor de TI.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section why-us" id="diferenciais">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">Por que a BMC</span>
+        <h2>Diferenciais que fazem a diferença</h2>
+        <p>Atendimento direto, transparente e focado em resolver de verdade.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="number">01</div>
+          <h3>Contato direto com o técnico</h3>
+          <p>Sem filas de espera, sem e-mails sem resposta. Você fala direto com quem vai resolver o problema.</p>
+        </div>
+        <div class="why-item">
+          <div class="number">02</div>
+          <h3>Diagnóstico preciso</h3>
+          <p>Vamos até a raiz do problema. Nada de soluções paliativas ou “jeitinhos” que voltam a dar erro.</p>
+        </div>
+        <div class="why-item">
+          <div class="number">03</div>
+          <h3>Visitas e entregas a domicílio</h3>
+          <p>Atendimento presencial em Sabará e região. Também fazemos entrega de equipamentos e envio por fretes exclusivos.</p>
+        </div>
+        <div class="why-item">
+          <div class="number">04</div>
+          <h3>Transparência e praticidade</h3>
+          <p>Orçamento claro, prazos realistas e comunicação simples. Sem enrolação.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="como-funciona">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">Processo</span>
+        <h2>Como funciona</h2>
+        <p>Simples, rápido e sem complicação.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Contato</h3>
+          <p>Chame no WhatsApp ou envie um e-mail descrevendo o problema.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Diagnóstico</h3>
+          <p>Avaliamos o equipamento ou a situação de forma técnica e detalhada.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Orçamento</h3>
+          <p>Você recebe um orçamento claro e transparente antes de qualquer serviço.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Execução</h3>
+          <p>Realizamos o serviço com qualidade — presencial, a domicílio ou com frete.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">5</div>
+          <h3>Garantia</h3>
+          <p>Acompanhamento e suporte após o serviço para sua tranquilidade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sobre" style="background: #eceff1;">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content">
+          <span class="label" style="color: var(--label); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">Sobre a empresa</span>
+          <h2>BMC Lab</h2>
+          <p>
+            Fundada com o propósito de oferecer soluções tecnológicas de verdade, a <strong>BMC Lab</strong> 
+            é especializada em reparos avançados, manutenção de equipamentos e infraestrutura de redes.
+          </p>
+          <p>
+            Atendemos empresas e pessoas físicas em <strong>Sabará - MG</strong> e região, com foco em diagnóstico preciso, 
+            transparência e resultados definitivos — sem gambiarras e sem enrolação.
+          </p>
+          <div class="about-highlights">
+            <div class="highlight">Atendimento direto e personalizado</div>
+            <div class="highlight">Visitas e entregas a domicílio</div>
+            <div class="highlight">Envio por fretes exclusivos</div>
+            <div class="highlight">Empresas e pessoas físicas</div>
+          </div>
+        </div>
+        <div class="about-visual">
+          <div class="about-visual-frame">
+            <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=800&h=600&q=85" alt="Técnico realizando reparo preciso em placa de vídeo e componentes eletrônicos" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact" id="contato">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">Contato</span>
+        <h2>Vamos resolver seu problema?</h2>
+        <p>Fale conosco. Resposta rápida e sem burocracia.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <h4>Endereço</h4>
+              <span>Centro, Sabará - MG</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📱</div>
+            <div>
+              <h4>WhatsApp / Telefone</h4>
+              <a href="https://wa.me/5531990119010" target="_blank" rel="noopener">(31) 99011-9010</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <h4>E-mail</h4>
+              <a href="mailto:BMCinfolab@gmail.com">BMCinfolab@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📸</div>
+            <div>
+              <h4>Instagram</h4>
+              <a href="https://instagram.com/brunozlab" target="_blank" rel="noopener">@brunozlab</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <h4>Horário de atendimento</h4>
+              <span>Segunda a Sexta — horário comercial</span>
+            </div>
+          </div>
+        </div>
+        <div class="contact-cta">
+          <h3>Precisa de um orçamento?</h3>
+          <p>Chame no WhatsApp e conte o que está acontecendo. Também atendemos com visitas a domicílio e fretes exclusivos.</p>
+          <a href="https://wa.me/5531990119010?text=Olá!%20Gostaria%20de%20um%20orçamento%20da%20BMC%20Lab" 
+             class="btn btn-whatsapp" target="_blank" rel="noopener">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Chamar no WhatsApp agora
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>
+        <strong>BMC Lab</strong><br>
+        Reparos avançados • Manutenção • Redes<br>
+        Sabará - MG | Visitas e entregas a domicílio
+      </p>
+      <p class="cnpj">CNPJ: 59.402.533/0001-42<br>© 2026 Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5531990119010?text=Olá!%20Gostaria%20de%20um%20orçamento%20da%20BMC%20Lab" 
+     class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+</body>
+</html>
